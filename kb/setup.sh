@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#
 echo "getting screen settings"
 wget https://raw.githubusercontent.com/kkb301/config/main/kb/xfce4.zip
 unzip xfce4.zip
