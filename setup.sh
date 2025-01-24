@@ -1,8 +1,8 @@
 
 #  for info
  
-#rpm-ostree rebase ostree-unverified-registry:ghcr.io/kkb301/gnome-41-1:41
-#rpm-ostree rebase ostree-image-signed:docker://ghcr.io/kkb301/gnome-41-1:41
+#rpm-ostree rebase ostree-unverified-registry:ghcr.io/kkb301/gnome-41-1:latest
+#rpm-ostree rebase ostree-image-signed:docker://ghcr.io/kkb301/gnome-41-1:latest
 
 # set up environment + flathub remove fedora
 
