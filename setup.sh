@@ -1,8 +1,8 @@
 
 #  for info
  
-#rpm-ostree rebase ostree-unverified-registry:ghcr.io/kkb301/gnome-41-1:latest
-#rpm-ostree rebase ostree-image-signed:docker://ghcr.io/kkb301/gnome-41-1:latest
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/kkb301/gnome-41-1:latest
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/kkb301/gnome-41-1:latest
 
 # set up environment + flathub remove fedora
 
@@ -21,6 +21,11 @@ distrobox-enter fedora41_box
 sudo dnf install wget
 wget https://mega.nz/linux/repo/Fedora_41/x86_64/megasync-Fedora_41.x86_64.rpm && sudo dnf install "$PWD/megasync-Fedora_40.x86_64.rpm"
 distrobox-export --app megasync
+sudo dnf install backintime-qt
+distrobox-export --app backintime-qt
+sudo dnf install grsync
+distrobox-export --app grsync
+
 
 # set up virt manager user
 sudo su
@@ -42,8 +47,8 @@ systemctl --user enable flatpak.timer --now
 systemctl --user enable rpm-ostree.timer --now
 # optional if permission issue when first trying to create
 
-#sudo restorecon -rv /var/lib/libvirt
-#sudo restorecon -rv /var/log/libvirt
+sudo restorecon -rv /var/lib/libvirt
+sudo restorecon -rv /var/log/libvirt
 
 #add kernal args
 #rpm-ostree kargs --editor

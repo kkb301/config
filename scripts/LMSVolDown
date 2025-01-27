@@ -1,0 +1,156 @@
+#!/usr/bin/perl
+
+
+
+use strict;
+
+use Getopt::Long;
+use IO::Socket;
+
+
+# Parameter defaults overridden by command line
+my $szServerIP		= "192.168.0.200";
+my $iServerCLIPort	= 9090;
+my $szPlayerName	= "lounge";
+my $szLine1		= "Line1 text";
+my $szLine2		= "Line2 text";
+my $szSound		= "/volume1/Music/Deurbel/Christmas.mp3";	# path on the machine where announcement.pl runs
+my $user		= "";
+my $passw		= "";   
+
+
+# Internal parameters
+my $debug		= 0;	# 0 = off, 1 = on
+
+GetOptions( 	"server:s"	=>	\$szServerIP,
+		"port:i"	=>	\$iServerCLIPort,
+		"name:s"	=>	\$szPlayerName,
+		"line1:s"	=>	\$szLine1,
+		"line2:s"	=>	\$szLine2,
+		"user:s"	=>	\$user,
+		"passw:s"	=>	\$passw,
+		"sound:s"	=>	\$szSound);
+
+# Check for a player name
+showUsage() if( $szPlayerName eq "");
+
+# Prepare variables
+$szPlayerName = encodeChars( $szPlayerName);
+$szLine1 = encodeChars( $szLine1);
+$szLine2 = encodeChars( $szLine2);
+$szSound = encodeChars( $szSound);
+
+# Try to open a connection to the SLIMP3 CLI
+my $socket = IO::Socket::INET->new(	PeerAddr => $szServerIP,
+					PeerPort => $iServerCLIPort,
+					Proto => "tcp",
+					Type => SOCK_STREAM);
+# Check if socket was opened successful
+if( !defined( $socket))
+{
+	print "Cannot connect to $szServerIP:$iServerCLIPort\n";
+	exit;
+}
+
+
+# Get the # of players
+my $iNumPlayer = sendAndReceive( "player count ?");
+$debug && print "iNumPlayer: $iNumPlayer\n";
+
+# Get the player ip and port from the name
+my $szPlayerIPAndPort = "";
+for( my $i = 0; $i < $iNumPlayer; $i++)
+{
+	if( $szPlayerName eq sendAndReceive( "player name $i ?"))
+	{
+		$szPlayerIPAndPort = sendAndReceive( "player address $i ?");
+		last;
+	}
+}
+$debug && print "szPlayerName: $szPlayerName\n";
+
+# Check if successful
+if( $szPlayerIPAndPort eq "")
+{
+	print "Player with name: $szPlayerName could not be found!\n";
+	close( $socket);
+	exit;
+}
+$debug && print "szPlayerIPAndPort: $szPlayerIPAndPort\n";
+
+
+
+
+# Get mode (play, stop, pause)
+my $iMode = sendAndReceive( "mode ?");
+$debug && print "iMode: $iMode\n";
+
+
+
+
+
+#
+
+# 
+
+	
+sendAndReceive( "mixer volume -1");
+#xfce4-panel --plugin-event=genmon-15:refresh:bool:true
+system "xfce4-panel --plugin-event=genmon-7:refresh:bool:true";
+
+
+close( $socket);
+
+# ---------------------------------------------
+sub sendAndReceive
+{
+	my $cmd = shift;
+
+	return if( $cmd eq "");
+
+#	$cmd = $szPlayerIP . encodeChars( ":") . $iPlayerPort . " " . $cmd;
+
+	if( $szPlayerIPAndPort ne "")
+	{
+		$cmd = $szPlayerIPAndPort . " " . $cmd;
+	}
+	print $socket "$cmd\n";
+	my $answer = <$socket>;
+	$answer =~ s/$cmd //i;
+	$answer =~ s/\n//;
+
+	return $answer;
+}
+
+# ---------------------------------------------
+sub encodeChars
+{
+	my $myChars = $_[0];
+
+	my $MetaChars = quotemeta(' ;,/?\|=+)(*&^%$#@!~`:');
+	
+	$myChars =~ s/([$MetaChars\"\'\x80-\xFF])/"%" . uc( sprintf( "%2.2x", ord($1)))/eg;
+
+	return $myChars;
+}
+
+# ---------------------------------------------
+sub showUsage
+{
+	print "usage: slimp3announcement.pl <parameters>\n";
+	print "\n";
+	print "Mandatory parameter:\n";
+	print "--name=<player name>\ti.e.: \"my slimp3\"\n";
+	print "\n";
+	print "Optional parameters:\n";
+	print "--server=<ip>\t\tdefault: 127.0.0.1\n";
+	print "--port=<nr>\t\tdefault: 9090\n";
+	print "--line1=<text>\t\tdefault: \"Line1 text\"\n";
+	print "--line2=<text>\t\tdefault: \"Line2 text\"\n";
+	print "--user=<text>\t\tdefault: \"\"\n";
+        print "--passw=<text>\t\tdefault: \"\"\n";
+ 	print "--sound=<soundfile>\tdefault: /music/_Diverses/gotmail19.mp3\n";
+	exit;
+}
+
+ 
