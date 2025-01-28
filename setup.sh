@@ -18,12 +18,10 @@ flatpak install -y org.geany.Geany
 # setup a box for megasync
 distrobox-create --name fedora41_box --image fedora:41
 distrobox-enter fedora41_box
-sudo dnf install wget
+sudo dnf install wget backintime-qt grsync wavemon
 wget https://mega.nz/linux/repo/Fedora_41/x86_64/megasync-Fedora_41.x86_64.rpm && sudo dnf install "$PWD/megasync-Fedora_40.x86_64.rpm"
 distrobox-export --app megasync
-sudo dnf install backintime-qt
 distrobox-export --app backintime-qt
-sudo dnf install grsync
 distrobox-export --app grsync
 
 
@@ -39,12 +37,13 @@ sudo nano /etc/rpm-ostreed.conf  ###  stage to none
 #copy timers to /var/home/kevin/.config/systemd/user
 mkdir .config/systemd
 mkdir .config/systemd/user
-cp -a /usr/share/kevin/timers/. .config/systemd/user
+cp -a Downloads/timers/. .config/systemd/user
 
 
 systemctl --user enable backintime.timer --now
 systemctl --user enable flatpak.timer --now
 systemctl --user enable rpm-ostree.timer --now
+
 # optional if permission issue when first trying to create
 
 sudo restorecon -rv /var/lib/libvirt
