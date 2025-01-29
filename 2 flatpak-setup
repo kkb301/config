@@ -1,0 +1,10 @@
+# set up environment + flathub remove fedora
+
+flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-delete fedora
+
+# vital flatpaks to setup
+
+flatpak install -y org.keepassxc.KeePassXC
+flatpak install -y io.github.vikdevelop.SaveDesktop
+flatpak install -y org.geany.Geany

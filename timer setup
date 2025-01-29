@@ -1,0 +1,10 @@
+#copy timers to /var/home/kevin/.config/systemd/user
+
+mkdir .config/systemd
+mkdir .config/systemd/user
+cp -a timers/. .config/systemd/user
+
+
+systemctl --user enable backintime.timer --now
+systemctl --user enable flatpak.timer --now
+systemctl --user enable rpm-ostree.timer --now

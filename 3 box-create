@@ -1,0 +1,3 @@
+# setup a box for megasync
+distrobox-create --name fedora41_box --image fedora:41
+distrobox-enter fedora41_box
