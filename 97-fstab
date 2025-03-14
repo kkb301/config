@@ -1,0 +1,3 @@
+LABEL=Data /mnt/Data auto nosuid,nodev,nofail,x-gvfs-show 0 0
+LABEL=BulkStore /mnt/BulkStore auto nosuid,nodev,nofail,x-gvfs-show 0 0
+LABEL=Backup /mnt/Backup auto nosuid,nodev,nofail,x-gvfs-show 0 0
