@@ -10,6 +10,8 @@ exit
 sudo nano /etc/rpm-ostreed.conf  ###  stage to none
 
 
+# add buttons to windows
+gsettings set  org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
 
 # optional if permission issue when first trying to create
 
