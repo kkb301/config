@@ -1,0 +1,13 @@
+
+# setup user/group for nordvpn
+
+sudo su
+grep -E '^nordvpn:' /usr/lib/group >> /etc/group
+usermod -a -G nordvpn kevin
+exit
+
+sudo systemctl enable --now nordvpnd.service
+
+nordvpn set lan-discovery on
+
+nordvpn login --token <token from account>
