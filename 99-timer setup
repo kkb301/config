@@ -8,3 +8,9 @@ cp -a timers/. .config/systemd/user
 systemctl --user enable backintime.timer --now
 systemctl --user enable flatpak.timer --now
 systemctl --user enable rpm-ostree.timer --now
+
+# disable dolphin timers
+systemctl mask flatpak-system-update.timer
+systemctl mask rpm-ostreed-automatic.timer
+systemctl mask brew-update.timer
+systemctl mask brew-upgrade.timer

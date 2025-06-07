@@ -23,7 +23,10 @@ sudo restorecon -rv /var/log/libvirt
 #add next line to end
 #  i8042.reset i8042.nomux i8042.nopnp i8042.noloop
 
+calendar data in 
+/kevin/.local/share/evolution/calendar/system
 
+#ssh
 #touchpad
 #power stuff
 #tweaks
