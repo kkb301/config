@@ -1,4 +1,4 @@
 #  for info
  
-rpm-ostree rebase ostree-unverified-registry:ghcr.io/kkb301/gnome-41-1:latest
-rpm-ostree rebase ostree-image-signed:docker://ghcr.io/kkb301/gnome-41-1:latest
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/kkb301/bluefin-1:latest
+rpm-ostree rebase ostree-image-signed:docker://ghcr.io/kkb301/bluefin-1:latest
