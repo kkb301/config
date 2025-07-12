@@ -7,7 +7,7 @@ usermod -a -G libvirt kevin
 exit
 
 # turn of auto updates
-sed -i 's/stage/none/g' /etc/rpm-ostreed.conf
+sudo sed -i 's/stage/none/g' /etc/rpm-ostreed.conf
 or
 sudo nano /etc/rpm-ostreed.conf  ###  stage to none
 
