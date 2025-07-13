@@ -2,11 +2,11 @@
 
 flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak remote-delete fedora
+flatpak remote-delete flathub
 
 # vital flatpaks to setup
 
-flatpak install -y org.keepassxc.KeePassXC
+
 flatpak install -y io.github.vikdevelop.SaveDesktop
-flatpak install -y org.geany.Geany
 flatpak install -y com.mattjakeman.ExtensionManager
 
