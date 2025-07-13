@@ -4,6 +4,6 @@ Wants=backintime.timer
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/distrobox-enter  -n fedora42_box -- backintime backup
+ExecStart=backintime backup
 
 
